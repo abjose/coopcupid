@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.views import generic
 
 from .filters import CommunityFilter
-from .models import Community
+from .models import Community, Question
 
 
 class IndexView(generic.ListView):
@@ -29,11 +29,6 @@ class UserListView(generic.ListView):
     template_name = 'polls/user_list.html'
 
 
-class UserDetailView(generic.DetailView):
-    model = User
-    template_name = 'polls/user_detail.html'
-
-
 class CommunityListView(generic.ListView):
     model = Community
     paginate_by = 30
@@ -41,9 +36,26 @@ class CommunityListView(generic.ListView):
     template_name = 'polls/community_list.html'
 
 
+class QuestionListView(generic.ListView):
+    model = Question
+    paginate_by = 30
+    ordering = ["pub_date"]
+    template_name = 'polls/question_list.html'
+
+
+class UserDetailView(generic.DetailView):
+    model = User
+    template_name = 'polls/user_detail.html'
+
+
 class CommunityDetailView(generic.DetailView):
     model = Community
     template_name = 'polls/community_detail.html'
+
+
+class QuestionDetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/question_detail.html'
 
 
 def community_search(request):

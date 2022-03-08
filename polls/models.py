@@ -42,7 +42,6 @@ class Membership(models.Model):
     membership_type = models.CharField(max_length=30)
 
 
-# PROBABLY DON'T WORRY ABOUT THIS STUFF YET
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
