@@ -20,4 +20,5 @@ urlpatterns = [
     
     path('communities/', views.CommunityListView.as_view(), name='communities'),
     path('communities/<int:pk>', views.CommunityDetailView.as_view(), name='community_detail'),
+    path('community_search/', views.community_search, name='community_search'),
 ]

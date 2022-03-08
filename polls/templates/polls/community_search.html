@@ -1,0 +1,9 @@
+<form method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" />
+</form>
+<ul>
+    {% for obj in filter.qs %}
+        <li><a href="{% url 'polls:community_detail' obj.id %}">{{ obj.name }}</a></li>
+    {% endfor %}
+</ul>

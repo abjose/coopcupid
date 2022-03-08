@@ -13,7 +13,17 @@ class Profile(models.Model):
 
 class Community(models.Model):
     name = models.CharField(max_length=100)
+    creation_date = models.DateTimeField('date created')
     bio = models.CharField(max_length=300)
+
+    # Ideas for fields: https://www.ic.org/directory/search/
+    size = models.IntegerField()
+    cool = models.BooleanField(default=False)
+    class SmellyLevel(models.TextChoices):
+        SF = '1', 'Scent-Free'
+        SS = '2', 'Slightly Smelly'
+        QR = '3', 'Quite Rank'
+    smelliness = models.CharField(blank=True, choices=SmellyLevel.choices, max_length=20)
 
     class Meta:
         verbose_name_plural = "communities"

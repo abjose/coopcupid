@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
+from .filters import CommunityFilter
 from .models import Community
 
 
@@ -43,3 +44,8 @@ class CommunityListView(generic.ListView):
 class CommunityDetailView(generic.DetailView):
     model = Community
     template_name = 'polls/community_detail.html'
+
+
+def community_search(request):
+    f = CommunityFilter(request.GET, queryset=Community.objects.all())
+    return render(request, 'polls/community_search.html', {'filter': f})
