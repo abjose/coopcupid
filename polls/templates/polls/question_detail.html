@@ -4,3 +4,13 @@
 </header>
 
 {{ object.question_text }}
+
+{% if request.user.is_authenticated %}
+<form action="{% url 'polls:question_detail' object.id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% else %}
+<p>Please log in to submit your answer.</p>
+{% endif %}

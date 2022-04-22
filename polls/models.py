@@ -27,7 +27,7 @@ class Community(models.Model):
 
     class Meta:
         verbose_name_plural = "communities"
-    
+
     def __str__(self):
         return self.name
 
@@ -45,6 +45,11 @@ class Membership(models.Model):
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+
+    class QuestionType(models.IntegerChoices):
+        CHOICE = 1
+        TEXT = 2
+    question_type = models.IntegerField(choices=QuestionType.choices)
 
     def __str__(self):
         return self.question_text
