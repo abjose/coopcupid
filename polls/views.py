@@ -62,7 +62,7 @@ def community_search(request):
 def get_question_detail(request, pk=None):
     question = Question.objects.get(pk=pk)
 
-    if not request.user:
+    if not request.user.is_authenticated:
         form = ChoiceResponseForm()
         return render(request, 'polls/question_detail.html', {'object': question, 'form': form})
 
