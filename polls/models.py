@@ -65,11 +65,14 @@ class Membership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
-    # Should this be an enum?
-    membership_type = models.CharField(max_length=30)
+    class MemberType(models.IntegerChoices):
+        FULL = 1, "Full"
+        SOCIAL = 2, "Social"
+        ALUM = 3, "Alum"
+    member_type = models.IntegerField(choices=MemberType.choices)
 
     def __str__(self):
-        return f"{self.profile} -> {self.community} ({self.membership_type})"
+        return f"{self.profile} -> {self.community} ({self.get_member_type_display()})"
 
 
 class Question(models.Model):
