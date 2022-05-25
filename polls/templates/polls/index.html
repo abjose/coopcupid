@@ -2,12 +2,31 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
+{% if request.user.is_authenticated %}
+    <p>Welcome, {{ request.user.username }}!</p>
+
+    {% if posts %}
+        Posts:
+        <ul>
+        {% for post in posts %}
+            <li><a href="{% url 'polls:post_detail' post.community.id post.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts are available.</p>
+    {% endif %}
+
+    {% if events %}
+        Events:
+        <ul>
+        {% for event in events %}
+            <li><a href="{% url 'polls:event_detail' event.community.id event.id %}">{{ event.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events are available.</p>
+    {% endif %}
+
+    {% else %}
+    <p>Welcome! Please log in.</p>
 {% endif %}

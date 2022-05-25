@@ -8,19 +8,36 @@ from django.views import generic
 
 from .filters import CommunityFilter
 from .forms import ChoiceResponseForm
-from .models import Community, Question, ChoiceResponse
+from .models import Community, Question, ChoiceResponse, Membership, Post, Event
 
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        # return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        return []
+
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+
+        # if self.request.user.id
+        print(f"user id: {self.request.user.id}")
+
+        if self.request.user.id:
+            context['posts'] = []
+            context['events'] = []
+
+            for membership in Membership.objects.filter(user=self.request.user):
+                context['posts'] += Post.objects.filter(community=membership.community)
+                context['events'] += Event.objects.filter(community=membership.community)
+
+            print(f"found {len(context['posts'])} posts and {len(context['events'])} events")
+        else:
+            print("not logged in")
+
+        return context
 
 
 class UserListView(generic.ListView):
@@ -50,6 +67,16 @@ class UserDetailView(generic.DetailView):
 
 
 class CommunityDetailView(generic.DetailView):
+    model = Community
+    template_name = 'polls/community_detail.html'
+
+
+class PostDetailView(generic.DetailView):
+    model = Community
+    template_name = 'polls/community_detail.html'
+
+
+class EventDetailView(generic.DetailView):
     model = Community
     template_name = 'polls/community_detail.html'
 

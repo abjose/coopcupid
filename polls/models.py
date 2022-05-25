@@ -24,12 +24,36 @@ class Community(models.Model):
         SS = '2', 'Slightly Smelly'
         QR = '3', 'Quite Rank'
     smelliness = models.CharField(blank=True, choices=SmellyLevel.choices, max_length=20)
+    # This should be a Question, shouldn't it?
 
     class Meta:
         verbose_name_plural = "communities"
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    creation_date = models.DateTimeField('date created')
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
+
+    # TODO: make rich text + include pictures and stuff
+    contents = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Event(models.Model):
+    title = models.CharField(max_length=100)
+    date = models.DateTimeField('date')
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
+
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 # Meant to allow multiple kinds of membership in a community.
@@ -40,6 +64,9 @@ class Membership(models.Model):
 
     # Should this be an enum?
     membership_type = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"{self.user} -> {self.community}"
 
 
 class Question(models.Model):
