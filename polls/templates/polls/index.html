@@ -2,8 +2,14 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
+<a href="{% url 'polls:communities' %}">Community Index</a>
+
 {% if request.user.is_authenticated %}
-    <p>Welcome, {{ request.user.username }}!</p>
+    <p>
+      Welcome, {{ request.user.username }}!
+      <a href="{% url 'polls:user_detail' request.user.id %}">Your Profile</a>
+    </p>
+
 
     {% if posts %}
         Posts:
