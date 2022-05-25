@@ -8,13 +8,13 @@ from django.utils import timezone
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=300)
+    bio = models.TextField()
 
 
 class Community(models.Model):
     name = models.CharField(max_length=100)
     creation_date = models.DateTimeField('date created')
-    bio = models.CharField(max_length=300)
+    bio = models.TextField()
 
     # Ideas for fields: https://www.ic.org/directory/search/
     size = models.IntegerField()

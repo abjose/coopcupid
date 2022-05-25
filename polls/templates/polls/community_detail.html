@@ -1,3 +1,14 @@
 <h1>{{ object.name }}</h1>
 
 {{ object.bio }}
+
+<p>Members:</p>
+<ul>
+{% if memberships %}
+    {% for membership in memberships %}
+        <li><a href="{% url 'polls:user_detail' membership.user.id %}">{{ membership.user.username }}</a></li>
+    {% endfor %}
+{% else %}
+    <li>None</li>
+{% endif %}
+</ul>
