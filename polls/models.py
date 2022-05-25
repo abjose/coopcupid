@@ -7,8 +7,11 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)#, primary_key=True)
     bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username
 
 
 class Community(models.Model):
@@ -59,14 +62,14 @@ class Event(models.Model):
 # Meant to allow multiple kinds of membership in a community.
 # Should this be something else? maybe not the best way to limit access like to admin features
 class Membership(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
     # Should this be an enum?
     membership_type = models.CharField(max_length=30)
 
     def __str__(self):
-        return f"{self.user} -> {self.community}"
+        return f"{self.profile} -> {self.community} ({self.membership_type})"
 
 
 class Question(models.Model):
@@ -86,7 +89,7 @@ class ChoiceResponse(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     # Can be either from a User or Community.
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
     community = models.ForeignKey(Community, on_delete=models.CASCADE, null=True, blank=True)
 
     # Stick with a single "spectrum" of possibilities so easier to compare answers.
