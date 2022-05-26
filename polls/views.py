@@ -8,7 +8,7 @@ from django.views import generic
 
 from .filters import CommunityFilter
 from .forms import ChoiceResponseForm
-from .models import Community, Question, ChoiceResponse, Membership, Post, Event
+from .models import Community, Question, ChoiceResponse, Membership, Post, Event, Profile
 
 
 class IndexView(generic.ListView):
@@ -29,7 +29,9 @@ class IndexView(generic.ListView):
             context['posts'] = []
             context['events'] = []
 
-            for membership in Membership.objects.filter(user=self.request.user):
+            profile = Profile.objects.get(user=self.request.user)
+
+            for membership in Membership.objects.filter(profile=profile):
                 context['posts'] += Post.objects.filter(community=membership.community)
                 context['events'] += Event.objects.filter(community=membership.community)
 
@@ -61,8 +63,8 @@ class QuestionListView(generic.ListView):
     template_name = 'polls/question_list.html'
 
 
-class UserDetailView(generic.DetailView):
-    model = User
+class ProfileDetailView(generic.DetailView):
+    model = Profile
     template_name = 'polls/user_detail.html'
 
 

@@ -6,7 +6,7 @@
 <ul>
 {% if memberships %}
     {% for membership in memberships %}
-        <li><a href="{% url 'polls:user_detail' membership.user.id %}">{{ membership.user.username }}</a></li>
+        <li><a href="{% url 'polls:user_detail' membership.profile.user.id %}">{{ membership.profile.user.username }}</a></li>
     {% endfor %}
 {% else %}
     <li>None</li>

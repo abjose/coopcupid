@@ -16,7 +16,7 @@ urlpatterns = [
     # path('goals/<int:pk>/', views.GoalDetailView.as_view(), name='goal_detail'),
 
     path('users/', views.UserListView.as_view(), name='users'),
-    path('users/<int:pk>', views.UserDetailView.as_view(), name='user_detail'),
+    path('users/<int:pk>', views.ProfileDetailView.as_view(), name='user_detail'),
     
     path('communities/', views.CommunityListView.as_view(), name='communities'),
     path('communities/<int:pk>', views.CommunityDetailView.as_view(), name='community_detail'),
