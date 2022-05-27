@@ -17,11 +17,12 @@ urlpatterns = [
 
     path('users/', views.UserListView.as_view(), name='users'),
     path('users/<int:pk>', views.ProfileDetailView.as_view(), name='user_detail'),
-    
+
     path('communities/', views.CommunityListView.as_view(), name='communities'),
     path('communities/<int:pk>', views.CommunityDetailView.as_view(), name='community_detail'),
     path('communities/<int:pk>/posts/<int:post_id>', views.PostDetailView.as_view(), name='post_detail'),
     path('communities/<int:pk>/events/<int:event_id>', views.EventDetailView.as_view(), name='event_detail'),
+    path('communities/<int:community_id>/follow/', views.follow_community, name='follow_community'),
     path('community_search/', views.community_search, name='community_search'),
 
     path('questions/', views.QuestionListView.as_view(), name='questions'),

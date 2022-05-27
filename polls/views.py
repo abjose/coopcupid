@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -124,3 +125,19 @@ def get_question_detail(request, pk=None):
         form = ChoiceResponseForm(instance=choice)
 
     return render(request, 'polls/question_detail.html', {'object': question, 'form': form})
+
+@login_required
+def follow_community(request, community_id=None):
+    user = User.objects.get(pk=request.user.id)
+    existing_membership = Membership.objects.filter(profile=user.profile, community=community_id)
+    if len(existing_membership) == 0:
+        print("Creating new membership.")
+        new_membership = Membership(
+            profile=user.profile, community=Community.objects.get(pk=community_id),
+            member_type=Membership.MemberType.FOLLOWER
+        )
+        new_membership.save()
+    else:
+        print("Membership already exists:", existing_membership[0])
+
+    return HttpResponseRedirect(reverse('polls:community_detail', args=[community_id]))

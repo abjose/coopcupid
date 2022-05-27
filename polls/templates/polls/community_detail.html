@@ -1,5 +1,15 @@
 <h1>{{ object.name }}</h1>
 
+<!-- Should show unfollow if already followed. -->
+{% if request.user.is_authenticated %}
+<form name="follow" method="post" action="{% url 'polls:follow_community' object.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="supporttype" />
+      <input type="submit" value="Follow" />
+</form>
+{% endif %}
+
+
 {{ object.bio }}
 
 <p>Members:</p>

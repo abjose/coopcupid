@@ -7,6 +7,7 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
+    # Make primary key?
     user = models.OneToOneField(User, on_delete=models.CASCADE)#, primary_key=True)
     bio = models.TextField()
 
@@ -69,6 +70,7 @@ class Membership(models.Model):
         FULL = 1, "Full"
         SOCIAL = 2, "Social"
         ALUM = 3, "Alum"
+        FOLLOWER = 4, "Follower"
     member_type = models.IntegerField(choices=MemberType.choices)
 
     def __str__(self):
