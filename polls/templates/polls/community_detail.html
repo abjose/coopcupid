@@ -12,6 +12,18 @@
 
 {{ object.bio }}
 
+<p>Current Openings:</p>
+<ul>
+{% if openings %}
+    {% for opening in openings %}
+        <li><a href="{% url 'polls:opening_detail' opening.id %}">{{ opening.title }}</a></li>
+    {% endfor %}
+{% else %}
+    <li>None</li>
+{% endif %}
+</ul>
+
+
 <p>Members:</p>
 <ul>
 {% if memberships %}

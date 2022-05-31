@@ -9,7 +9,7 @@ from django.views import generic
 
 from .filters import CommunityFilter
 from .forms import ChoiceResponseForm
-from .models import Community, Question, ChoiceResponse, Membership, Post, Event, Profile
+from .models import Community, Question, ChoiceResponse, Membership, Post, Event, Profile, Opening
 
 
 class IndexView(generic.ListView):
@@ -76,6 +76,7 @@ class CommunityDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(CommunityDetailView, self).get_context_data(**kwargs)
 
+        context['openings'] = Opening.objects.filter(community=self.object.id)
         context['memberships'] = Membership.objects.filter(community=self.object.id)
 
         return context
@@ -89,6 +90,11 @@ class PostDetailView(generic.DetailView):
 class EventDetailView(generic.DetailView):
     model = Community
     template_name = 'polls/community_detail.html'
+
+
+class OpeningDetailView(generic.DetailView):
+    model = Opening
+    template_name = 'polls/opening_detail.html'
 
 
 def community_search(request):

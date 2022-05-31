@@ -25,6 +25,8 @@ urlpatterns = [
     path('communities/<int:community_id>/follow/', views.follow_community, name='follow_community'),
     path('community_search/', views.community_search, name='community_search'),
 
+    path('opening/<int:pk>', views.OpeningDetailView.as_view(), name='opening_detail'),
+
     path('questions/', views.QuestionListView.as_view(), name='questions'),
     # path('questions/<int:pk>', views.QuestionDetailView.as_view(), name='question_detail'),
     path('questions/<int:pk>', views.get_question_detail, name='question_detail'),

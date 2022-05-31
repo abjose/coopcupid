@@ -42,9 +42,6 @@ class Post(models.Model):
     creation_date = models.DateTimeField('date created')
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
-    # TODO: make rich text + include pictures and stuff
-    contents = models.TextField()
-
     def __str__(self):
         return self.title
 
@@ -55,6 +52,20 @@ class Event(models.Model):
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Opening(models.Model):
+    title = models.CharField(max_length=100)
+    creation_date = models.DateTimeField('date created')
+    community = models.ForeignKey(Community, on_delete=models.CASCADE)
+
+    is_active = models.BooleanField(default=False)
+
+    # need stuff like: associated questions
+    # probably also need an Application model
 
     def __str__(self):
         return self.title
