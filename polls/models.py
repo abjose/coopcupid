@@ -42,6 +42,8 @@ class Post(models.Model):
     creation_date = models.DateTimeField('date created')
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
 
+    content = models.TextField()
+
     def __str__(self):
         return self.title
 
