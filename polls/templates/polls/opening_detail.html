@@ -1,4 +1,4 @@
 <h1>{{ object.title }}</h1>
-<h3>{{ object.community.name }}</h3>
+<h3>Opening at <a href="{% url 'polls:community_detail' object.community.id %}">{{ object.community.name }}</a></h3>
 
 TODO: apply button
