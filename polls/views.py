@@ -66,7 +66,7 @@ class QuestionListView(generic.ListView):
 
 class ProfileDetailView(generic.DetailView):
     model = Profile
-    template_name = 'polls/user_detail.html'
+    template_name = 'polls/profile_detail.html'
 
 
 class CommunityDetailView(generic.DetailView):
@@ -83,13 +83,13 @@ class CommunityDetailView(generic.DetailView):
 
 
 class PostDetailView(generic.DetailView):
-    model = Community
-    template_name = 'polls/community_detail.html'
+    model = Post
+    template_name = 'polls/post_detail.html'
 
 
 class EventDetailView(generic.DetailView):
-    model = Community
-    template_name = 'polls/community_detail.html'
+    model = Event
+    template_name = 'polls/event_detail.html'
 
 
 class OpeningDetailView(generic.DetailView):

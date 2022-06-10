@@ -1,0 +1,6 @@
+<h1>{{ object.title }}</h1>
+<a href="{% url 'polls:community_detail' object.community.id %}">{{ object.community.name }}</a>, {{ object.creation_date }}
+
+<p></p>
+
+{{ object.content }}
