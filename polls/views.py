@@ -19,7 +19,6 @@ class IndexView(generic.ListView):
         # return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
         return []
 
-
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
 
@@ -30,7 +29,8 @@ class IndexView(generic.ListView):
             context['posts'] = []
             context['events'] = []
 
-            profile = Profile.objects.get(user=self.request.user)
+            # profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
 
             for membership in Membership.objects.filter(profile=profile):
                 context['posts'] += Post.objects.filter(community=membership.community)
@@ -41,13 +41,6 @@ class IndexView(generic.ListView):
             print("not logged in")
 
         return context
-
-
-class UserListView(generic.ListView):
-    model = User
-    paginate_by = 30
-    ordering = ["name"]
-    template_name = 'polls/user_list.html'
 
 
 class CommunityListView(generic.ListView):
@@ -109,9 +102,9 @@ def get_question_detail(request, pk=None):
         form = ChoiceResponseForm()
         return render(request, 'polls/question_detail.html', {'object': question, 'form': form})
 
-    choices = ChoiceResponse.objects.filter(question=question, user=request.user)
+    choices = ChoiceResponse.objects.filter(question=question, profile=request.user.profile)
     if len(choices) == 0:
-        choice = ChoiceResponse(question=question, user=request.user)
+        choice = ChoiceResponse(question=question, profile=request.user.profile)
     else:
         assert(len(choices) == 1)
         choice = choices[0]

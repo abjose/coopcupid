@@ -28,7 +28,7 @@
 <ul>
 {% if memberships %}
     {% for membership in memberships %}
-        <li><a href="{% url 'polls:user_detail' membership.profile.user.id %}">{{ membership.profile.user.username }} ({{ membership.get_member_type_display }})</a></li>
+        <li><a href="{% url 'polls:profile_detail' membership.profile.id %}">{{ membership.profile.user.username }} ({{ membership.get_member_type_display }})</a></li>
     {% endfor %}
 {% else %}
     <li>None</li>

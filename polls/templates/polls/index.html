@@ -7,7 +7,7 @@
 {% if request.user.is_authenticated %}
     <p>
       Welcome, {{ request.user.username }}!
-      <a href="{% url 'polls:user_detail' request.user.id %}">Your Profile</a>
+      <a href="{% url 'polls:profile_detail' request.user.profile.id %}">Your Profile</a>
     </p>
 
 
